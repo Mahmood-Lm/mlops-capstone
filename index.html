@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Sentiment Analyzer</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #e9ecef; margin: 0; }
+        .card { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); text-align: center; width: 100%; max-width: 450px; }
+        h2 { color: #333; margin-top: 0; }
+        textarea { width: 95%; height: 120px; margin-bottom: 1.5rem; padding: 10px; border: 2px solid #dee2e6; border-radius: 8px; font-size: 1rem; resize: none; font-family: inherit; }
+        textarea:focus { outline: none; border-color: #007bff; }
+        button { background: #007bff; color: white; border: none; padding: 12px 25px; border-radius: 8px; font-size: 1.1rem; cursor: pointer; transition: background 0.3s; font-weight: bold; width: 100%; }
+        button:hover { background: #0056b3; }
+        #result { margin-top: 2rem; font-size: 1.5rem; font-weight: bold; color: #495057; min-height: 35px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>AI Sentiment Analyzer</h2>
+        <textarea id="textInput" placeholder="Type a sentence here... (e.g., 'I absolutely love this new automated pipeline!')"></textarea>
+        <button onclick="analyzeText()">Analyze Sentiment</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function analyzeText() {
+            const text = document.getElementById('textInput').value;
+            const resultDiv = document.getElementById('result');
+            
+            if (!text.trim()) {
+                resultDiv.innerHTML = "Please enter some text! ✍️";
+                return;
+            }
+
+            resultDiv.innerHTML = "Thinking... 🤖";
+
+            try {
+                // Notice we use a relative path here! 
+                // The browser will automatically send this to the same server it loaded the HTML from.
+                const response = await fetch(`/analyze?text=${encodeURIComponent(text)}`);
+                const data = await response.json();
+                
+                // Extracting the data (Modify these keys if your Python JSON returns different names)
+                const sentiment = data.sentiment || "Unknown";
+                const emoji = data.emoji || "";
+                
+                resultDiv.innerHTML = `${sentiment} ${emoji}`;
+            } catch (error) {
+                resultDiv.innerHTML = "Error connecting to AI. 🚨";
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>

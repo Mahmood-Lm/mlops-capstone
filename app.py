@@ -1,5 +1,6 @@
 import time
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
 from textblob import TextBlob
 from prometheus_client import make_asgi_app, Counter, Histogram
 
@@ -14,6 +15,10 @@ SENTIMENT_REQUEST_COUNT = Counter('sentiment_api_requests_total', 'Total request
 SENTIMENT_LATENCY = Histogram('sentiment_api_latency_seconds', 'Latency of sentiment analysis')
 
 @app.get("/")
+def serve_frontend():
+    return FileResponse("index.html")
+
+@app.get("/health")
 def health_check():
     return {"status": "healthy", "service": "NLP Sentiment Analysis API"}
 
