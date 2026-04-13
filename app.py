@@ -39,6 +39,7 @@ def analyze_sentiment(text: str):
     SENTIMENT_LATENCY.observe(process_time)
     SENTIMENT_REQUEST_COUNT.inc()
     
+    # Return the analysis results
     return {
         "analyzed_text": text,
         "mathematical_polarity": polarity,
