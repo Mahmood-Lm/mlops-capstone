@@ -109,6 +109,12 @@ resource "aws_security_group" "capstone_sg" {
 
 # 4. The Capstone Server (c7i-flex.large) with Automated Setup
 resource "aws_instance" "capstone_server" {
+
+  root_block_device {
+    volume_size = 16 # Upgrades the default 8GB drive to 16GB!
+    volume_type = "gp3"
+  }
+
   ami           = data.aws_ami.ubuntu.id
   instance_type = "c7i-flex.large" 
   subnet_id     = aws_subnet.capstone_subnet.id
