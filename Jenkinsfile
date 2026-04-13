@@ -37,7 +37,7 @@ pipeline {
             steps {
                 echo "Telling Kubernetes to pull and deploy the latest AI model..."
                 // K3s stores its config file here, so we tell Jenkins to use it!
-                sh "KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl apply -f k8s/deployment.yaml"
+                sh "KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl apply -f k8s/"
                 
                 // Force Kubernetes to pull the absolute newest image we just built
                 sh "KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl rollout restart deployment/sentiment-api-deployment"
