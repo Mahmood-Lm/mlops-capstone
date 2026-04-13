@@ -41,11 +41,13 @@
                 const response = await fetch(`/analyze?text=${encodeURIComponent(text)}`);
                 const data = await response.json();
                 
-                // Extracting the data (Modify these keys if your Python JSON returns different names)
-                const sentiment = data.sentiment || "Unknown";
-                const emoji = data.emoji || "";
+                // Extracting the data from the API response
+                const sentiment = data.sentiment_result || "Unknown";
+                // const emoji = data.emoji || ""; // Uncomment if your API returns an emoji field
                 
-                resultDiv.innerHTML = `${sentiment} ${emoji}`;
+                // resultDiv.innerHTML = `${sentiment} ${emoji}`;
+                resultDiv.innerHTML = `${sentiment}`;
+
             } catch (error) {
                 resultDiv.innerHTML = "Error connecting to AI. 🚨";
                 console.error(error);
