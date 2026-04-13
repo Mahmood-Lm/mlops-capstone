@@ -1,0 +1,8 @@
+*.pem
+# Terraform files
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+*.tfvars.json
