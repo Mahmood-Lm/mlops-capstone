@@ -140,6 +140,11 @@ resource "aws_instance" "capstone_server" {
               echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
               sudo apt-get update -y
               sudo apt-get install jenkins -y
+
+              # Give Jenkins permission to use Docker
+              sudo usermod -aG docker jenkins
+              # Restart Jenkins so the permission takes effect immediately
+              sudo systemctl restart jenkins
               
               # Install K3s (Lightweight Kubernetes)
               curl -sfL https://get.k3s.io | sh -
